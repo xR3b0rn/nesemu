@@ -7,7 +7,6 @@ using namespace NintendoEntertainmentSystem;
 
 int main(int argc, char* argv[])
 {
-	Nes nes;
-	nes.loadCartridge("C:/Users/Julian/Desktop/Mega Man III (E).nes");
-	return 0;
+    Nes nes("F:/Setups_and_Images/Roms/NES/Ice Climber (U) .nes");
+    return 0;
 }

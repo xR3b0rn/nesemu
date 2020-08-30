@@ -4,77 +4,27 @@
 
 using namespace NintendoEntertainmentSystem;
 
-#pragma warning (push)
-#pragma warning (disable : 4800)
-
-Mapper004::Mapper004(CPU6502* pCPU6502)
-	: __super1(pCPU6502)
+Mapper004::Mapper004(const Cartridge* cartridge)
+    : base1_t(cartridge)
 {
+    ui8_t c = cartridge->CountPrg16KRamBanks();
+    SwitchPrgRom4k((c - 8_ui8).cast<ui8_t*>(), 0_ui8);
+    SwitchPrgRom4k((c - 7_ui8).cast<ui8_t*>(), 1_ui8);
+    SwitchPrgRom4k((c - 6_ui8).cast<ui8_t*>(), 2_ui8);
+    SwitchPrgRom4k((c - 5_ui8).cast<ui8_t*>(), 3_ui8);
+    SwitchPrgRom4k((c - 4_ui8).cast<ui8_t*>(), 4_ui8);
+    SwitchPrgRom4k((c - 3_ui8).cast<ui8_t*>(), 5_ui8);
+    SwitchPrgRom4k((c - 2_ui8).cast<ui8_t*>(), 6_ui8);
+    SwitchPrgRom4k((c - 1_ui8).cast<ui8_t*>(), 7_ui8);
 }
-void Mapper004::setup()
+void Mapper004::WriteMemory8(address_t address, ui8_t data)
 {
-	CPU6502* pCPU6502 = getCPU6502();
-	UINT8 prgRamCount = pCPU6502->getCartridge()->getPrgRamCount();
-	pCPU6502->switchPrgRom4k(prgRamCount - 8, 0);
-	pCPU6502->switchPrgRom4k(prgRamCount - 7, 1);
-	pCPU6502->switchPrgRom4k(prgRamCount - 6, 2);
-	pCPU6502->switchPrgRom4k(prgRamCount - 5, 3);
-	pCPU6502->switchPrgRom4k(prgRamCount - 4, 4);
-	pCPU6502->switchPrgRom4k(prgRamCount - 3, 5);
-	pCPU6502->switchPrgRom4k(prgRamCount - 2, 6);
-	pCPU6502->switchPrgRom4k(prgRamCount - 1, 7);
+    if (address < 0x8000_ui16)
+    {
+        WriteMemory8(address, data);
+    }
+    else
+    {
+        // ...
+    }
 }
-void Mapper004::writeMemory8(address_t address, UINT8 data)
-{
-	CPU6502* pCPU6502 = getCPU6502();
-	if (address < 0x8000)
-	{
-		pCPU6502->writeMappedMemory8Absolute(address, data);
-	}
-	else
-	{
-		switch (address)
-		{
-		case 0x8000:
-			m_PrgMode = data & 0x80;
-			m_ChrMode = data & 0x40;
-			m_Address8001 = data & 0x07;
-			break;
-		case 0x8001:
-			switch (m_Address8001)
-			{
-			case 0: break;
-
-			case 1: break;
-			case 2: break;
-			case 3: break;
-			case 4: break;
-			case 5: break;
-			case 6:
-				if (m_PrgMode)
-				{
-					pCPU6502->switchPrgRom4k(data * 2, 3);
-					pCPU6502->switchPrgRom4k(data * 2 + 1, 4);
-				}
-				else
-				{
-					pCPU6502->switchPrgRom4k(data * 2, 0);
-					pCPU6502->switchPrgRom4k(data * 2 + 1, 1);
-				}
-				pCPU6502->switchPrgRom4k(data * 2 + 2, 1);
-				pCPU6502->switchPrgRom4k(data * 2 + 3, 2);
-				break;
-			case 7: break;;
-			}
-			break;
-		case 0xA000:
-		case 0xA001:
-		case 0xC000:
-		case 0xC001:
-		case 0xE000:
-		case 0xE001:;
-		}
-	}
-}
-
-#pragma warning (pop)

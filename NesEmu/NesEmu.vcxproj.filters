@@ -13,105 +13,75 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Headerdateien\CPU">
-      <UniqueIdentifier>{cd57b1a7-d384-45d4-ab83-7391066dbf06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\CPU">
-      <UniqueIdentifier>{d0494463-cc7c-4f9f-b219-29ec07ed51fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Memory">
-      <UniqueIdentifier>{d977db97-f518-460a-8170-67eb7b85295d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Memory">
-      <UniqueIdentifier>{2e029ae1-7d55-4cc4-8654-ed5d045e28a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Nes">
-      <UniqueIdentifier>{424ee927-492e-4382-8260-450b8310d002}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Nes">
-      <UniqueIdentifier>{c5f1f4ad-9f42-44d0-ab38-d43be2c4229f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Memory\Mapper">
-      <UniqueIdentifier>{30ff7473-7155-4b07-9037-1cc7567ff521}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Memory\Mapper">
-      <UniqueIdentifier>{203532c2-9e17-470b-9960-88ffce947264}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\PPU">
-      <UniqueIdentifier>{d0872665-6abb-4752-ac5d-f59eacc24ab2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\PPU">
-      <UniqueIdentifier>{7c421926-3ba4-4182-9cb4-6df1da1da3f0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NesEmu.cpp">
+    <ClCompile Include="CPU6502.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="CPU6502.cpp">
-      <Filter>Quelldateien\CPU</Filter>
-    </ClCompile>
-    <ClCompile Include="CPUOpCodes.cpp">
-      <Filter>Quelldateien\CPU</Filter>
-    </ClCompile>
     <ClCompile Include="Cartridge.cpp">
-      <Filter>Quelldateien\Nes</Filter>
-    </ClCompile>
-    <ClCompile Include="Nes.cpp">
-      <Filter>Quelldateien\Nes</Filter>
+      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="CPUMemory.cpp">
-      <Filter>Quelldateien\Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="Mapper004.cpp">
-      <Filter>Quelldateien\Memory\Mapper</Filter>
-    </ClCompile>
-    <ClCompile Include="IMapper.cpp">
-      <Filter>Quelldateien\Memory\Mapper</Filter>
+      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="PPUMemory.cpp">
-      <Filter>Quelldateien\Memory</Filter>
+      <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="IMemory.tpp">
-      <Filter>Quelldateien\Memory</Filter>
+    <ClCompile Include="IMapper.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Mapper004.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Nes.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="PPU.cpp">
-      <Filter>Quelldateien\PPU</Filter>
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Mapper000.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Typedef.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="PPU.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
     <ClInclude Include="CPU6502.h">
-      <Filter>Headerdateien\CPU</Filter>
-    </ClInclude>
-    <ClInclude Include="CPUOpCodes.h">
-      <Filter>Headerdateien\CPU</Filter>
-    </ClInclude>
-    <ClInclude Include="Cartridge.h">
-      <Filter>Headerdateien\Nes</Filter>
-    </ClInclude>
-    <ClInclude Include="Nes.h">
-      <Filter>Headerdateien\Nes</Filter>
+      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="CPUMemory.h">
-      <Filter>Headerdateien\Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="Mapper004.h">
-      <Filter>Headerdateien\Memory\Mapper</Filter>
-    </ClInclude>
-    <ClInclude Include="IMapper.h">
-      <Filter>Headerdateien\Memory\Mapper</Filter>
+      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="PPUMemory.h">
-      <Filter>Headerdateien\Memory</Filter>
+      <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="IMemory.h">
-      <Filter>Headerdateien\Memory</Filter>
+    <ClInclude Include="IMapper.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="PPU.h">
-      <Filter>Headerdateien\PPU</Filter>
+    <ClInclude Include="Mapper004.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Cartridge.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Nes.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Mapper000.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

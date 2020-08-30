@@ -1,78 +1,45 @@
 
 #pragma once
 
+#include <vector>
+
 #include "Typedef.h"
 #include "Memory.h"
 
 namespace NintendoEntertainmentSystem
 {
-	class Cartridge
-	{
-	public:
-		enum class EMirroring
-		{
-			VERTICAL = 0,
-			HORIZONTAL = 1,
-			FOUR_SCREEN = 2,
-			ONE_SCREEN = 3,
-		};
-		enum class ETVSystem1
-		{
-			NTSC = 0,
-			PAL = 1,
-		};
-		enum class ETVSystem2
-		{
-			NTSC = 0,
-			DUAL_COMPATIBLE1 = 1,
-			PAL = 2,
-			DUAL_COMPATIBLE2 = 3,
-		};
+    class Cartridge
+    {
+    public:
+        enum class Mirroring
+        {
+            Vertical = 0,
+            Horizontal = 1,
+            FourScreen = 2,
+            OneScreen = 3,
+        };
+        enum class TVSystem1
+        {
+            NTSC = 0,
+            PAL = 1,
+        };
+        enum class TVSystem2
+        {
+            NTSC = 0,
+            DualCompatible1 = 1,
+            PAL = 2,
+            DualCompatible2 = 3,
+        };
 
-#pragma pack(1)
-		class Header
-		{
-		public:
-			UINT8 getSizeOfPrgRom(); // 32kibyte
-			UINT8 getSizeOfChrRom();
-			UINT16 getMapperNumber();
-			bool getTrainerPresent();
-			bool getCartridgeContainesBateryBackedPrgRam();
-			EMirroring getMirroring();
-			bool getNes2Dot0Format();
-			bool getPlayChoice10();
-			bool getVsUnisystem();
-			ETVSystem1 getTvSystem1();
-			bool getHasBusConflicts();
-			bool getPrgRamPresent();
-			ETVSystem2 getTvSystem2();
+    public:
+        Cartridge(const std::string& fn_cartridge);
+        const ui8_t* Prg16kRomData(ui8_t index) const; // 4kibyte
+        const ui8_t* Chr8kRomData(ui8_t index) const;
+        ui8_t MapperNumber() const;
+        ui8_t CountPrg16KRamBanks() const;
+        bool TrainerPresent() const;
 
-		private:
-			char m_Signature[4];
-			UINT8 m_SizeOfPrgRom;
-			UINT8 m_SizeOfChrRom;
-			UINT8 m_Flags6;
-			UINT8 m_Flags7;
-			UINT8 m_SizeOfPrgRam;
-			UINT8 m_Flags9;
-			UINT8 m_Flags10;
-			UINT8 m_Paddern[5]; // zero filled
-		};
-#pragma pack()
-
-	public:
-		Cartridge();
-		void load(const char* filepath);
-		UINT8* getPrgRomData(UINT8 index); // 4kibyte
-		UINT8* getChrRomData(UINT8 index);
-		UINT16 getMapperNumber();
-		UINT8 getPrgRamCount();
-
-	private:
-		Cartridge::Header m_Header;
-		UINT8** m_PrgRomData;	// 4096 * x bytes
-		UINT8** m_ChrRomData;	// 8192 * y bytes
-		UINT8* m_Trainer;		// 0 or 512 bytes
-		EMirroring m_Mirroring;
-	};
+    private:
+        std::vector<ui8_t> _buffer;
+    };
 }

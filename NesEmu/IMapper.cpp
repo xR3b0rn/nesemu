@@ -3,11 +3,10 @@
 
 using namespace NintendoEntertainmentSystem;
 
-IMapper::IMapper(CPU6502* pCPU6502)
-	: m_pCPU6502(pCPU6502)
+IMapper::IMapper(const Cartridge* cartridge)
+    : _cartridge(cartridge)
+{}
+const Cartridge* IMapper::GetCartridge() const
 {
-}
-CPU6502* IMapper::getCPU6502()
-{
-	return m_pCPU6502;
+    return _cartridge;
 }

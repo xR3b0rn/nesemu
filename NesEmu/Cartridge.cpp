@@ -4,106 +4,56 @@
 
 using namespace NintendoEntertainmentSystem;
 
-#pragma warning (push)
-#pragma warning (disable : 4800)
+enum HeaderOffsets
+{
+    StringIdentification  = 0x00,
+    IntegerIdentification = 0x03,
+    NumOf16KPrgRomBanks   = 0x04,
+    NumOf8KChrRomBanks    = 0x05,
+    RomControlByte1       = 0x06,
+    RomControlByte2       = 0x07,
+    NumberOf8KRamBanks    = 0x08,
+    Reserved              = 0x09,
+    FirstNonHeaderByte    = 0x10,
+};
 
-#pragma region Cartridge Header
-UINT8 Cartridge::Header::getSizeOfPrgRom()
+Cartridge::Cartridge(const std::string& fn_cartridge)
 {
-	return m_SizeOfPrgRom;
+    std::ifstream ifs(fn_cartridge, std::ios::binary | std::ios::ate);
+    if (!ifs.is_open())
+    {
+        throw std::runtime_error("Cartridge: Could not open \"" + fn_cartridge + "\"!");
+    }
+    std::streamsize size = ifs.tellg();
+    ifs.seekg(0, std::ios::beg);
+    _buffer.resize(size);
+    ifs.read(reinterpret_cast<char*>(&_buffer[0]), size);
 }
-UINT8 Cartridge::Header::getSizeOfChrRom()
+const ui8_t* Cartridge::Prg16kRomData(ui8_t index) const
 {
-	return m_SizeOfChrRom;
+    if (CountPrg16KRamBanks() <= index)
+    {
+        throw std::runtime_error("Cartrdige: ROM does not have requeted PRG-ROM bank \"" + index.to_s() + "\"!");
+    }
+    ui64_t trainer_offset = TrainerPresent() ? 512_ui64 : 0_ui64;
+    ui64_t start_prg_rom_data = ui64_t(FirstNonHeaderByte) + trainer_offset;
+    return &_buffer[(start_prg_rom_data + index.to<ui64_t>() * 0x4000_ui64).raw()];
 }
-UINT16 Cartridge::Header::getMapperNumber()
+const ui8_t* Cartridge::Chr8kRomData(ui8_t index) const
 {
-	return (m_Flags6 >> 4) | (m_Flags7 & 0xF0);
+    ui64_t trainer_offset = TrainerPresent() ? 512_ui64 : 0_ui64;
+    ui64_t start_chr_rom_data = ui64_t(FirstNonHeaderByte) + trainer_offset + CountPrg16KRamBanks().to<ui64_t>() * 0x4000_ui64;
+    return &_buffer[(start_chr_rom_data + index.to<ui64_t>() * 0x2000_ui64).raw()];
 }
-bool Cartridge::Header::getTrainerPresent()
+ui8_t Cartridge::MapperNumber() const
 {
-	return (bool)(m_Flags6 & 0x04);
+    return _buffer[RomControlByte1] >> 4_ui8 | _buffer[RomControlByte2] & 0xF0_ui8;
 }
-bool Cartridge::Header::getCartridgeContainesBateryBackedPrgRam()
+ui8_t Cartridge::CountPrg16KRamBanks() const
 {
-	return (bool)(m_Flags6 & 0x02);
+    return _buffer[NumOf16KPrgRomBanks];
 }
-Cartridge::EMirroring Cartridge::Header::getMirroring()
+bool Cartridge::TrainerPresent() const
 {
-	return EMirroring(((m_Flags6 & 0x08) >> 2) | (m_Flags6 & 0x01));
+    return (_buffer[RomControlByte1] & 0x04_ui8) != 0_ui8;
 }
-bool Cartridge::Header::getNes2Dot0Format()
-{
-	return (m_Flags7 & 0x0C) == 0x08;
-}
-bool Cartridge::Header::getPlayChoice10()
-{
-	return (m_Flags7 & 0x02) == 0x02;
-}
-bool Cartridge::Header::getVsUnisystem()
-{
-	return (m_Flags7 & 0x01) == 0x01;
-}
-Cartridge::ETVSystem1 Cartridge::Header::getTvSystem1()
-{
-	return Cartridge::ETVSystem1(m_Flags9 & 0x01);
-}
-bool Cartridge::Header::getHasBusConflicts()
-{
-	return bool(m_Flags10 & 0x20);
-}
-bool Cartridge::Header::getPrgRamPresent()
-{
-	return bool(m_Flags10 & 0x10);
-}
-Cartridge::ETVSystem2 Cartridge::Header::getTvSystem2()
-{
-	return ETVSystem2(m_Flags10 & 0x03);
-}
-#pragma endregion
-
-Cartridge::Cartridge()
-{
-	memset(&m_Header, 0, sizeof(m_Header));
-}
-void Cartridge::load(const char* filepath)
-{
-	std::ifstream is;
-	is.open(filepath, std::ios::in | std::ios::binary);
-	is.read((char*)&m_Header, sizeof(m_Header));
-	if (m_Header.getTrainerPresent())
-	{
-		m_Trainer = new UINT8[0x200];
-		is.read((char*)m_Trainer, 0x200);
-	}
-	UINT16 sizeOfPrgRom = m_Header.getSizeOfPrgRom() * 4;
-	m_PrgRomData = new UINT8*[sizeOfPrgRom];
-	for (INT32 i = 0; i < sizeOfPrgRom; i++)
-	{
-		m_PrgRomData[i] = new UINT8[0x1000];
-		is.read((char*)m_PrgRomData[i], 0x1000);
-	}
-	m_ChrRomData = new UINT8*[m_Header.getSizeOfChrRom()];
-	for (INT32 i = 0; i < m_Header.getSizeOfChrRom(); i++)
-	{
-		m_ChrRomData[i] = new UINT8[0x2000];
-		is.read((char*)m_ChrRomData[i], sizeof(0x2000));
-	}
-}
-UINT8* Cartridge::getPrgRomData(UINT8 index)
-{
-	return m_PrgRomData[index];
-}
-UINT8* Cartridge::getChrRomData(UINT8 index)
-{
-	return m_ChrRomData[index];
-}
-UINT16 Cartridge::getMapperNumber()
-{
-	return m_Header.getMapperNumber();
-}
-UINT8 Cartridge::getPrgRamCount()
-{
-	return m_Header.getSizeOfPrgRom() *  4;
-}
-#pragma warning (pop)

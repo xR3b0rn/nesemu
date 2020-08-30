@@ -6,19 +6,21 @@
 
 namespace NintendoEntertainmentSystem
 {
-	class CPU6502;
+    class CPU6502;
+    class IMapper
+        : public CPUMemory
+    {
+    public:
+        using base1_t = CPUMemory;
 
-	class IMapper abstract
-	{
-	public:
-		IMapper(CPU6502* pCPU6502);
-		virtual void setup() = 0;
-		virtual void writeMemory8(address_t address, UINT8 data) = 0;
+        IMapper(const Cartridge* cartridge);
+        virtual void WriteMemory8(address_t address, ui8_t data) = 0;
+        virtual ~IMapper() = default;
 
-	protected:
-		CPU6502* getCPU6502();
+    protected:
+        const Cartridge* GetCartridge() const;
 
-	private:
-		CPU6502* m_pCPU6502;
-	};
+    private:
+        const Cartridge* _cartridge;
+    };
 }
