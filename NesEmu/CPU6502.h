@@ -225,12 +225,14 @@ namespace NintendoEntertainmentSystem
         void SetFlag(Flags flag, bool value);
 
         // getter
-        OPC::Code Peek() const;
-        ui8_t Fetch();
         ui8_t Accumulator() const;
         bool Flag(Flags flag) const;
         ui64_t CyclesCount() const;
         ui16_t ProgramCounter() const;
+        ui8_t StackPointer() const;
+
+        OPC::Code Peek() const;
+        ui8_t Fetch();
         
         void Push(ui8_t data);
         ui8_t Pop();

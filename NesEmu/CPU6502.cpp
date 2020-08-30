@@ -233,6 +233,10 @@ ui16_t CPU6502::ProgramCounter() const
 {
     return _reg_program_counter;
 }
+ui8_t CPU6502::StackPointer() const
+{
+    return _reg_stack_pointer;
+}
 void CPU6502::Push(ui8_t data)
 {
     if (_reg_stack_pointer == 0x00_ui8)
@@ -248,8 +252,8 @@ ui8_t CPU6502::Pop()
     {
         throw std::runtime_error("CPU6502::Pop: Can not pop from the stack since the stack is empty!");
     }
-    ui8_t result = _mapper->ReadMemory8(ui16_t(CPUMemory::Segs::Stack) + _reg_stack_pointer.to<ui16_t>());
     _reg_stack_pointer++;
+    ui8_t result = _mapper->ReadMemory8(ui16_t(CPUMemory::Segs::Stack) + _reg_stack_pointer.to<ui16_t>());
     return result;
 }
 //

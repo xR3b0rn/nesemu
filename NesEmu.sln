@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30420.98
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NesEmu", "NesEmu\NesEmu.vcxproj", "{614C8EB6-C37C-4AEE-9BB6-3FDD05A4FBF5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,14 @@ Global
 		{614C8EB6-C37C-4AEE-9BB6-3FDD05A4FBF5}.Release|Win32.Build.0 = Release|Win32
 		{614C8EB6-C37C-4AEE-9BB6-3FDD05A4FBF5}.Release|x64.ActiveCfg = Release|x64
 		{614C8EB6-C37C-4AEE-9BB6-3FDD05A4FBF5}.Release|x64.Build.0 = Release|x64
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Debug|Win32.Build.0 = Debug|Win32
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Debug|x64.ActiveCfg = Debug|x64
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Debug|x64.Build.0 = Debug|x64
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Release|Win32.ActiveCfg = Release|Win32
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Release|Win32.Build.0 = Release|Win32
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Release|x64.ActiveCfg = Release|x64
+		{BED876D0-55A7-4D69-B9E9-7FF857B5DD9F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
